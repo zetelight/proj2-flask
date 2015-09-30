@@ -14,6 +14,9 @@ import arrow # Replacement for datetime, based on moment.js
 import datetime # But we still need time
 from dateutil import tz  # For interpreting local times
 
+# On shared machines we'll pick a random port
+import random
+
 # Our own module
 import pre  # Preprocess schedule file
 
@@ -61,8 +64,11 @@ def format_arrow_date( date ):
 if __name__ == "__main__":
     import uuid
     app.secret_key = str(uuid.uuid4())
-    app.debug=True
+    # app.debug=True
+    portnum = random.randint(5000,8000)
+    app.config['SERVER_NAME']="ix.cs.uoregon.edu:{}".format(portnum)
     app.logger.setLevel(logging.DEBUG)
+    app.logger.debug("Listening on port {}".format(portnum))
     app.run()
 
     
