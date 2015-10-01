@@ -5,6 +5,9 @@ displaying a course schedule.
 """
 
 import flask
+from flask import render_template
+from flask import request
+from flask import url_for
 
 import json
 import logging
@@ -37,6 +40,7 @@ app.logger.setLevel(logging.DEBUG)
 ###
 
 @app.route("/")
+@app.route("/index")
 @app.route("/schedule")
 def index():
   app.logger.debug("Main page entry")
@@ -51,6 +55,7 @@ def index():
 @app.errorhandler(404)
 def page_not_found(error):
     app.logger.debug("Page not found")
+    flask.session['linkback'] =  flask.url_for("index")
     return flask.render_template('page_not_found.html'), 404
 
 #################
