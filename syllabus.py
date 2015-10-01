@@ -25,6 +25,13 @@ app = flask.Flask(__name__)
 schedule = "static/schedule.txt"  # This should be configurable
 import CONFIG
 
+
+import uuid
+app.secret_key = str(uuid.uuid4())
+app.debug=CONFIG.DEBUG
+app.logger.setLevel(logging.DEBUG)
+
+
 ###
 # Pages
 ###
@@ -40,6 +47,10 @@ def index():
 
   return flask.render_template('syllabus.html')
 
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
 
 #################
 #
