@@ -20,7 +20,7 @@ def process(raw):
             continue
         parts = line.split(':')
         if len(parts) == 1 and field:
-            entry[field] = entry[field] + line
+            entry[field] = entry[field] + line + " "
             continue
         if len(parts) == 2: 
             field = parts[0]
@@ -48,6 +48,9 @@ def process(raw):
 
         else:
             raise ValueError("Syntax error in line: {}".format(line))
+
+    if entry:
+        cooked.append(entry)
 
     return cooked
 
