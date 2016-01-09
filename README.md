@@ -1,6 +1,10 @@
 # proj2-flask
 A starter project for using the Flask framework
 
+Remember to remove these instructions and replace them with the 
+material described at 
+   https://www.cs.uoregon.edu/Classes/16W/cis399se/turnin.php
+
 ## Basic task
 
 * Fork on github (or bitbucket)
@@ -13,7 +17,10 @@ A starter project for using the Flask framework
 ## In your workspace
 
 Copy CONFIG.base.py to CONFIG.py, and edit it. You can probably use
-the standard port 5000 if you are the only user of the computer.
+the standard port 5000 if you are the only user of the computer. 
+On ix, you should generate a random port number; numbers between 
+4000 and 8000 are good.  (Numbers below 1000 are not permitted; 
+those are 'privileged' 
 
 type `make install`
 
@@ -32,14 +39,14 @@ Note that we do not use app.cgi when we can run flask applications
 directly. 
 
 This should work on MacOS, or on your own Linux box if you have one. I
-don't know about Windows.  It won't work this way on ix, for a couple
-of reasons:  First, there is only one port 5000 on ix, and we can't
-all share it.  Also, I think the built-in flask server is not working
-with Python3 on ix (although I could be wrong about that).
+don't know about Windows.  It won't work this way on ix: 
+There is only one port 5000 on ix, and we can't
+all share it.
 
 ## On ix.cs.uoregon.edu
 
-If you don't already have a top-level 'public_html' directory, create one: 
+You should already have a top-level 'public_html' directory.  If you 
+don't, then create one: 
 
 `  mkdir public_html`
 
@@ -48,7 +55,7 @@ or cis322 subdirectory.  I've optimistically called mine cis322:
 
 `   cd public_html;  mkdir cis322`
 
-Public_html is for serving web pages from your personal account.  We're going to be using the department's Apache web server to run our application as a 'cgi-bin' subprocess.  To do that, we'll need to keep our application in a subdirectory called 'htbin'. 
+Public_html is for serving web pages from your personal account.  We're going to be using the department's Apache web server to run our application as a 'cgi-bin' subprocess.  To do that, we'll need to keep our application in a subdirectory called 'htbin'.  
 
 `   cd cis322;  mkdir htbin`
 
@@ -66,7 +73,8 @@ Flask server at all, but just in case set it to use a randomly chosen port.
 type `make install`
 
  The Makefile has a hacky workaround for a bug in the ubuntu
-version on ix, so this should work. 
+version on ix, so this should work.   (You'll learn much more about writing and 
+using Makefiles in CIS 330.) 
 
 What's really different is that we won't be running syllabus.py directly from the command line.  Instead, it is loaded as a Python module by a tiny Python program called app.cgi.  The 'cgi' suffix tells our web server to run the script, so we can reach it through the url `http://ix.cs.uoregon.edu/~michal/cis322/htbin/proj2-flask/app.cgi/`.  
 
