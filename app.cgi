@@ -21,6 +21,6 @@ assert p.exists() and p.is_dir()
 site.addsitedir(EnvLib)  # Use the modules we installed
 
 from wsgiref.handlers import CGIHandler
-from syllabus import app
+from flask_syllabus import app
 
 CGIHandler().run(app)
