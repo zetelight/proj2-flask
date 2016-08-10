@@ -9,14 +9,15 @@ def process(raw):
     """
     Line by line processing of syllabus file.  Each line that needs
     processing is preceded by 'head: ' for some string 'head'.  Lines
-    may be continued if they don't contain ':'.  
+    may be continued if they don't contain ':'.  If # is the first
+    non-blank character on a line, it is a comment ad skipped. 
     """
     field = None
     entry = { }
     cooked = [ ] 
     for line in raw:
-        line = line.rstrip()
-        if len(line) == 0:
+        line = line.strip()
+        if len(line) == 0 or line[0]=="#" :
             continue
         parts = line.split(':')
         if len(parts) == 1 and field:
@@ -57,7 +58,7 @@ def process(raw):
 
 
 def main():
-    f = open("static/schedule.txt")
+    f = open("data/schedule.txt")
     parsed = process(f)
     print(parsed)
 

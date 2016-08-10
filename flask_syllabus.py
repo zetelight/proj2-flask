@@ -46,7 +46,7 @@ def index():
   app.logger.debug("Main page entry")
   if 'schedule' not in flask.session:
       app.logger.debug("Processing raw schedule file")
-      raw = open('static/schedule.txt')
+      raw = open(CONFIG.schedule)
       flask.session['schedule'] = pre.process(raw)
 
   return flask.render_template('syllabus.html')
