@@ -31,10 +31,24 @@ env:
 dist:
 	pip freeze >requirements.txt
 
-# 'make run' will run our program
+# 'make run' runs Flask's built-in test server, 
+#  with debugging turned on unless it is unset in CONFIG.py
 # 
 run:	$(SOURCES) env
 	( . env/bin/activate; python3 flask_syllabus.py ) || true
+
+# 'make service' runs as a background job under the gunicorn 
+#  WSGI server. FIXME:  A real production service would use 
+#  NGINX in combination with gunicorn to prevent DOS attacks. 
+#
+#  For now we are running gunicorn on its default port of 8000. 
+#  FIXME: Configuration builder could put the desired port number
+#  into Makefile.local. 
+# 
+service:	$(SOURCES) env
+	echo "Launching green unicorn in background"
+	( . env/bin/activate; gunicorn --bind="0.0.0.0:8000" flask_syllabus:app &) 
+
 
 
 # 'clean' and 'veryclean' are typically used before checking 

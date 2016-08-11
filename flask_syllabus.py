@@ -85,7 +85,8 @@ if __name__ == "__main__":
 else:
     # Running from cgi-bin or from gunicorn WSGI server, 
     # which makes the call to app.run.  Gunicorn may invoke more than
-    # one instance for concurrent service. 
+    # one instance for concurrent service. It is essential all
+    # instances share the same secret key for session management. 
     app.secret_key = CONFIG.secret_key
     app.debug=False
 
