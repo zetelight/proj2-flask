@@ -1,13 +1,19 @@
 #
 # Second app: Flask project
 #
-# You must execute ./configure before this Makefile will work 
+# Gnu make and bash are required. 
+#
+# To run from source: 
+#    bash ./configure
+#    make run 
 # 
+#  'make configure' may also work, but with error
+#   messages.
 
 SOURCES = flask_syllabus.py pre.py
 
 Makefile.local: 
-	sh ./configure
+	bash ./configure
 
 include Makefile.local  ## Where customizations go 
 
