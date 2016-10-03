@@ -2,8 +2,8 @@
 A starter project for using the Flask framework
 
 Remember to remove these instructions and replace them with the 
-material described at 
-   https://www.cs.uoregon.edu/Classes/16W/cis399se/turnin.php
+an appropriate README. 
+
 
 ## Basic task
 
@@ -16,18 +16,11 @@ material described at
 
 ## In your workspace
 
-Copy CONFIG.base.py to CONFIG.py, and edit it. You can probably use
-the standard port 5000 if you are the only user of the computer. 
-On ix, you should generate a random port number; numbers between 
-4000 and 8000 are good.  (Numbers below 1000 are not permitted; 
-those are 'privileged' 
-
-type `make install`
-
-You might have to edit the Makefile to find the right version of
-pyvenv.  The Makefile has a hacky workaround for a bug in the ubuntu
-version on ix.cs.uoregon.edu; I think this will still work in most
-environments, although it will be slower.  Try it and let me know. 
+'bash ./configure' should create appropriate configuration files on
+most Unix files.   If you are using Windows, some additional editing
+of configuration files may be necessary.  You might have to edit the
+Makefile to find the right version of 
+pyvenv.
 
 If you can run flask applications in your development environment, the
 application would might be run by
@@ -35,48 +28,30 @@ application would might be run by
 and then reached with url
 `   http://localhost:5000`
 
-Note that we do not use app.cgi when we can run flask applications
-directly. 
-
-This should work on MacOS, or on your own Linux box if you have one. I
-don't know about Windows.  It won't work this way on ix: 
-There is only one port 5000 on ix, and we can't
-all share it.
+`make run` will launch the debugging server built into flask.  It
+provides the best support for tracking down bugs in your server, but
+it's not suitable for use by many users or over a long period.  `make
+service` starts a Green Unicorn (gunicorn) server; you may note the extra
+lime sparkles all around you.  Green Unicorn can be used for servers
+that run over a longer period (e.g., if you want to leave a web
+service running on your Pi).   
 
 ## On ix.cs.uoregon.edu
 
-You should already have a top-level 'public_html' directory.  If you 
-don't, then create one: 
+You may optionally use ix for testing.  This could be of most use to
+Windows users;  for MacOS users, there is very little advantage of
+testing on ix over testing on MacOS.
 
-`  mkdir public_html`
+## On your Pi
 
-within the public_html directory, it's probably a good idea to create a cis399
-or cis322 subdirectory.  I've optimistically called mine cis322: 
+It is important to test your service on your Pi.  You should be able
+to write a simple shell script that installs the latest version of
+your system (by cloning your repository from github), configures it,
+and launches a server for testing.   If you are not familiar enough
+with Unix and with bash shell scripting to do that, work with
+classmates to develop the scripts you need.  I'll contribute to that
+effort, but I prefer to be part of a collaborative effort rather than
+just developing the scripts myself and giving them to you.  (I'll
+defintely have my own for installing and testing your projects.) 
 
-`   cd public_html;  mkdir cis322`
-
-Public_html is for serving web pages from your personal account.  We're going to be using the department's Apache web server to run our application as a 'cgi-bin' subprocess.  To do that, we'll need to keep our application in a subdirectory called 'htbin'.  
-
-`   cd cis322;  mkdir htbin`
-
-This is where we'll clone the project from Github.  
-
-`   cd htbin;  git clone https://theURLofYourForkedProject`
-
-Then `cd` into that directory.  From here it's going to be similar but 
-not quite identical to working in your own workspace. 
-
-Copy CONFIG.base.py to CONFIG.py, and edit it. You can't use the default
-port 5000 there ... in fact we probably won't be able to use the default 
-Flask server at all, but just in case set it to use a randomly chosen port.
-
-type `make install`
-
- The Makefile has a hacky workaround for a bug in the ubuntu
-version on ix, so this should work.   (You'll learn much more about writing and 
-using Makefiles in CIS 330.) 
-
-What's really different is that we won't be running syllabus.py directly from the command line.  Instead, it is loaded as a Python module by a tiny Python program called app.cgi.  The 'cgi' suffix tells our web server to run the script, so we can reach it through the url `http://ix.cs.uoregon.edu/~michal/cis322/htbin/proj2-flask/app.cgi/`.  
-
-The URLs are long and ugly, but it will do for testing. 
 
