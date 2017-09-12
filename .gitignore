@@ -1,4 +1,5 @@
-CONFIG.py
+.DS_Store
+syllabus/credentials.ini
 
 # The rest are standard ignores from github
 
