@@ -12,7 +12,7 @@
 <h1>Schedule</h1>
 
 <table class="class-schedule">
-  {% for entry in session.schedule %}
+  {% for entry in g.schedule %}
   {% if loop.index is divisibleby 2 %}
   <tr class="even">
   {% else %}

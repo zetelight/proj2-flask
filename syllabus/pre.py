@@ -1,7 +1,12 @@
 """
-Test program for pre-processing schedule
+Pre-process a syllabus (class schedule) file. 
 """
 import arrow
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s',
+                    level=logging.INFO)
+log = logging.getLogger(__name__)
+
 
 base = arrow.now()
 
@@ -16,8 +21,10 @@ def process(raw):
     entry = { }
     cooked = [ ] 
     for line in raw:
+        log.debug("Line: {}".format(line))
         line = line.strip()
         if len(line) == 0 or line[0]=="#" :
+            log.debug("Skipping")
             continue
         parts = line.split(':')
         if len(parts) == 1 and field:

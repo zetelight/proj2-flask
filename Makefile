@@ -1,28 +1,21 @@
 #
-# Second app: Flask project
-#
-# Gnu make and bash are required. 
-#
-# To run from source: 
-#    bash ./configure
-#    make run 
+# Second app: Flask project Creates a date-sensitive course schedule
+# (syllabus) that highlights the current week
 # 
-#  'make configure' may also work, but with error
-#   messages.
 
-SOURCES = flask_syllabus.py pre.py
+SRC = syllabus
+SOURCES = $(SRC)/flask_syllabus.py $(SRC)/pre.py $(SRC)/credentials.ini
 
-Makefile.local: 
-	bash ./configure
 
-include Makefile.local  ## Where customizations go 
+$(SRC)/credentials.ini:
+	echo "You must create credentials.ini and save it in $(SRC)"
 
 ##
 ##  Virtual environment
 ##     
 env:
-	$(PYVENV)  env
-	(.  env/bin/activate; pip install -r requirements.txt)
+	python3 -m venv  env
+	(source env/bin/activate; pip install -r requirements.txt)
 
 
 ##
@@ -32,23 +25,20 @@ dist:
 	pip freeze >requirements.txt
 
 # 'make run' runs Flask's built-in test server, 
-#  with debugging turned on unless it is unset in CONFIG.py
+#  which may be configured with built-in debugging
 # 
 run:	$(SOURCES) env
-	( . env/bin/activate; python3 flask_syllabus.py ) || true
+	(source env/bin/activate; cd syllabus; \
+	python3 flask_syllabus.py ) || true
 
 # 'make service' runs as a background job under the gunicorn 
-#  WSGI server. FIXME:  A real production service would use 
-#  NGINX in combination with gunicorn to prevent DOS attacks. 
+#  WSGI server.  Could be configured to with nginx reverse proxy. 
 #
-#  For now we are running gunicorn on its default port of 8000. 
-#  FIXME: Configuration builder could put the desired port number
-#  into Makefile.local. 
 # 
 service:	$(SOURCES) env
 	echo "Launching green unicorn in background"
-	( . env/bin/activate; gunicorn --bind="0.0.0.0:8000" flask_syllabus:app &) 
-
+	( . env/bin/activate; cd syllabus; \
+          gunicorn --bind="0.0.0.0:8000" flask_syllabus:app &) 
 
 
 # 'clean' and 'veryclean' are typically used before checking 
@@ -57,14 +47,12 @@ service:	$(SOURCES) env
 # requires re-running installation and configuration steps
 # 
 clean:
-	rm -f *.pyc
+	rm -f *.pyc */*.pyc
 	rm -rf __pycache__
 
 veryclean:
 	make clean
-	rm -f CONFIG.py
 	rm -rf env
-	rm -f Makefile.local
 
 
 
