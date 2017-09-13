@@ -17,7 +17,9 @@ topic: Course introduction.  Basic web (http) architecture.  Managing
 	(~3 pages).   Depending on prior experience, you may also need
 	to read introductions to Python and/or Unix.
 	
-project: Implement a trivial web server entirely in Python.   
+project:  Implement a very simple web server entirely in Python.
+(Also complete a "project 0" to practice the logistics of git
+repositories and turning in configuration files.) 
 
 week: 2
 

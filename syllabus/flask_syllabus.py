@@ -51,7 +51,7 @@ def refresh():
     app.logger.debug("Refreshing schedule")
     global schedule
     schedule = pre.process(open(configuration.SYLLABUS))
-    return flask.redirect(url_for("index"))
+    return flask.redirect(flask.url_for("index"))
 
 @app.errorhandler(404)
 def page_not_found(error):
