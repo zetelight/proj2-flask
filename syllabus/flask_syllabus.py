@@ -100,8 +100,8 @@ def format_arrow_date(date):
 
 #
 # If run as main program (not under gunicorn), we
-# turn on debugging and restrict connections
-# to localhost (127.0.0.1)
+# turn on debugging.  Connects to anything (0.0.0.0)
+# so that we can test remote connections.
 #
 if __name__ == "__main__":
-    app.run(port=configuration.PORT, host="127.0.0.1")
+    app.run(port=configuration.PORT, host="0.0.0.0")
