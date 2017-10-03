@@ -1,14 +1,14 @@
 """
 Pre-process a syllabus (class schedule) file. 
+
 """
-import arrow
+import arrow   # Dates and times
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s',
                     level=logging.INFO)
 log = logging.getLogger(__name__)
 
-
-base = arrow.now()
+base = arrow.now()   # Default, replaced if file has 'begin: ...'
 
 def process(raw):
     """

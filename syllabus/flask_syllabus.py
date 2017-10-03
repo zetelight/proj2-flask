@@ -27,6 +27,9 @@ else:
     # If we aren't main, the command line doesn't belong to us
     configuration = config.configuration(proxied=True)
 
+if configuration.DEBUG:
+    app.logger.setLevel(logging.DEBUG)
+
 # Pre-processed schedule is global, so be careful to update
 # it atomically in the view functions. 
 #
@@ -35,6 +38,8 @@ schedule = pre.process(open(configuration.SYLLABUS))
 
 ###
 # Pages
+# Each of these transmits the default "200/OK" header
+# followed by html from the template.
 ###
 
 @app.route("/")
@@ -53,11 +58,27 @@ def refresh():
     schedule = pre.process(open(configuration.SYLLABUS))
     return flask.redirect(flask.url_for("index"))
 
+### Error pages ###
+#   Each of these transmits an error code in the transmission
+#   header along with the appropriate page html in the
+#   transmission body
+
 @app.errorhandler(404)
 def page_not_found(error):
     app.logger.debug("Page not found")
-    flask.session['linkback'] =  flask.url_for("index")
-    return flask.render_template('page_not_found.html'), 404
+    flask.g.linkback =  flask.url_for("index")
+    return flask.render_template('404.html'), 404
+
+@app.errorhandler(500)
+def i_am_busted(error):
+    app.logger.debug("500: Server error")
+    return flask.render_template('500.html'), 500
+
+@app.errorhandler(403)
+def no_you_cant(error):
+    app.logger.debug("403: Forbidden")
+    return flask.render_template('403.html'), 403
+
 
 #################
 #
@@ -74,13 +95,12 @@ def format_arrow_date( date ):
         return "(bad date)"
 
 
-#############
 #    
-# Set up to run from cgi-bin script, from
-# gunicorn, or stand-alone.
+# If run as main program (not under gunicorn), we
+# turn on debugging and restrict connections
+# to localhost (127.0.0.1)
 #
 if __name__ == "__main__":
-    app.logger.setLevel(logging.DEBUG)
     app.run(port=configuration.PORT, host="127.0.0.1")
 
 
