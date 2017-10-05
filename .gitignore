@@ -1,6 +1,13 @@
 .DS_Store
 syllabus/credentials.ini
+#cridential file
+*.ini
 
+#Virtual environment file
+env/
+#Pycharm IDE files
+.idea/
+syllabus/.idea/
 # The rest are standard ignores from github
 
 # Byte-compiled / optimized / DLL files
